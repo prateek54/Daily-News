@@ -12,9 +12,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
+        android:divider="#7c7c7c"
         android:layout_centerInParent = "true"
-        android:dividerHeight="0dp"/>
+        android:dividerHeight="10dp"/>
 
     <ProgressBar
         android:id="@+id/loading_spinner"

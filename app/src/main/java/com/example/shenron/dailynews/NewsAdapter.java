@@ -44,50 +44,21 @@ public class NewsAdapter extends ArrayAdapter<News>{
         categoryView.setText(currentNews.getCategory());
 
 
-        Date dateObject = new Date(currentNews.getDate());
         TextView dateView = (TextView)listItemView.findViewById(R.id.date_text_view);
 
-        String formattedDate = formatDate(dateObject);
+        String date = currentNews.getDate().substring(0,10);
+        // Rearrange the date to the format as follows: dd-mm-yy
+        String formattedDate = date.substring(8, 9) + date.substring(4, 8) + date.substring(0, 4);
         dateView.setText(formattedDate);
 
         TextView timeView = (TextView)listItemView.findViewById(R.id.time_text_view);
-        String formattedTime = formatTime(dateObject);
+        String time = currentNews.getDate().substring(11,15);
+        // Rearrange the time to the format as follows: hh:mm
+        String formattedTime = time;
         timeView.setText(formattedTime);
 
         // Return the list item view that is now showing the appropriate data
         return listItemView;
 
-    }
-
-    private String formatDate(Date dateString) {
-        String someDateString = "2016-09-26T15:57:34Z";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
-        Date dateObject = null;
-        try {
-            dateObject = simpleDateFormat.parse(String.valueOf(dateString));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        simpleDateFormat = new SimpleDateFormat("LLL dd,yyyy");
-        String date = simpleDateFormat.format(dateObject);
-
-        return date;
-    }
-
-    private String formatTime(Date timeString)
-    {
-        String someTimeString = "2016-09-26T15:57:34Z";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
-        Time timeObject = null;
-        try{
-            timeObject = (Time) simpleDateFormat.parse(String.valueOf(timeString));
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-
-        simpleDateFormat = new SimpleDateFormat("hh:mm a");
-        String time = simpleDateFormat.format(timeObject);
-        return time;
     }
 }
