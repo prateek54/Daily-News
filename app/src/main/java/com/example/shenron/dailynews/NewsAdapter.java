@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.shenron.dailynews.News;
-import com.example.shenron.dailynews.R;
 
 import java.sql.Time;
 import java.text.ParseException;
