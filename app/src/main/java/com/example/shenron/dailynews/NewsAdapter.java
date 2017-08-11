@@ -3,11 +3,15 @@ package com.example.shenron.dailynews;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.shenron.dailynews.News;
+import com.example.shenron.dailynews.R;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -44,21 +48,56 @@ public class NewsAdapter extends ArrayAdapter<News>{
         categoryView.setText(currentNews.getCategory());
 
 
+        String dateObject = currentNews.getDate();
+        Log.d("DATE TIME LOG",dateObject);
         TextView dateView = (TextView)listItemView.findViewById(R.id.date_text_view);
 
-        String date = currentNews.getDate().substring(0,10);
-        // Rearrange the date to the format as follows: dd-mm-yy
-        String formattedDate = date.substring(8, 9) + date.substring(4, 8) + date.substring(0, 4);
+        String formattedDate = formatDate(dateObject);
         dateView.setText(formattedDate);
 
         TextView timeView = (TextView)listItemView.findViewById(R.id.time_text_view);
-        String time = currentNews.getDate().substring(11,15);
-        // Rearrange the time to the format as follows: hh:mm
-        String formattedTime = time;
+        String formattedTime = formatTime(dateObject);
         timeView.setText(formattedTime);
 
         // Return the list item view that is now showing the appropriate data
         return listItemView;
 
+    }
+
+    private String formatDate(String dateString) {
+        String someDateString = "2016-09-26T15:57:34Z";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
+        Date dateObject = null;
+        try {
+            dateObject = simpleDateFormat.parse(String.valueOf(dateString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        simpleDateFormat = new SimpleDateFormat("LLL dd,yyyy");
+        String date = simpleDateFormat.format(dateObject);
+
+        return date;
+    }
+
+    private String formatTime(String timeString)
+    {
+        String someTimeString = "2016-09-26T15:57:34Z";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
+        Date dateObject = null;
+        long timeObject = 0;
+
+        try {
+            dateObject = simpleDateFormat.parse(String.valueOf(timeString));
+            timeObject = dateObject.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        simpleDateFormat = new SimpleDateFormat("hh:mm a");
+        String time = simpleDateFormat.format(timeObject);
+        return time;
     }
 }
